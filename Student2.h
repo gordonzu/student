@@ -6,6 +6,7 @@
 class Student2 {
 public:
   
+  typedef std::vector<double>::size_type vec_sz;
   //Student2(const std::string name): name_(std::move(name)) {}
   //Student2(const char* name): name_(name) {}
   Student2(const std::string& name): name_(name) {}
@@ -22,15 +23,14 @@ public:
     return homework_;  
   }
 
-  double getMedianGrade(std::vector<double>& homework) {
-    typedef std::vector<double>::size_type vec_sz;
-    vec_sz size = homework.size();
+  double getMedianGrade(std::vector<double>& work) {
+    vec_sz mid = sortAndDivideVector(work);
+    return (work.size() % 2 == 0 ? (work[mid] + work[mid-1]) / 2 : work[mid]);
+  } 
+
+  vec_sz sortAndDivideVector(std::vector<double>& homework) {
     std::sort(homework.begin(), homework.end());
-    vec_sz mid = size/2;
-    
-    double median;
-    median = size % 2 == 0 ? (homework[mid] + homework[mid-1]) / 2 : homework[mid];
-    return median;
+    return (vec_sz) (homework.size())/2;
   }  
 
   double getFinalGrade(double midterm, double final, double median) {
